@@ -52,8 +52,7 @@ $(document).ready(function () {
   });
 
   dataRef.on("child_added", function (childSnapshot) {
-
-
+    
     $('.train-schedule').append("<tr class='table-row' id=" + "'" + childSnapshot.key() + "'" + ">" +
       "<td class='col-xs-3'>" + childSnapshot.val().name +
       "</td>" +
@@ -75,8 +74,14 @@ $(document).ready(function () {
     dataRef.child(getKey).remove();
   });
 
+// I got below code from Alex, I couldn't figure out how to get mine to update the firebase over time, Alex showed me his but I coulldn't
+// really figure out how to apply it to mine.
+// I figured out what I need to do but don't have the time to fix it
+// I am doing the math BEFORE pushing into firebase so firebase only has a static calculation
+// I need to push everything in and do the calculation as I am appending it
+
   function timeUpdater() {
-    dataRef.red().child('trains').once('value', function(snapshot){
+    dataRef.ref().child('trains').once('value', function(snapshot){
       snapshot.forEach(function(childSnapshot){
         fbTime = moment().format('X');
         dataRef.ref('trains/' + childSnapshot.key).update({
